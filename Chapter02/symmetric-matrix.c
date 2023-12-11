@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#define FAILURE exit(0)
+#define FAILURE exit(1)
 
 void mem_failure(void);
 
@@ -16,6 +16,12 @@ int main()
 	printf("\nThis program will determine whether sqaure matrix entered is symmetric.\n");
 	printf("Please enter the size of the square matrix: ");
 	scanf("%d", &m);
+
+	// check for proper input for size of matrix
+	if (m < 2) {
+		fprintf(stderr, "Invalid size of matrix.\n");
+		FAILURE;
+	}
 
 	// allocate memory for matrix
 	matrix = malloc(m * sizeof(int *));
