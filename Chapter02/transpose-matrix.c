@@ -27,7 +27,7 @@ int main()
 	// allocate memory for user inputted matrix
 	mem_alloc(&original_m, m, n);
 	// allocate memory for transpose matrix (flip m and n)
-	mem_alloc(&transpose_m, n, m);
+	mem_alloc(&transpose_m, n, m); // need to properly free original matrix if allocation for transpose matrix fails
 
 	// accept user input for oringinal matrix
 	user_input(original_m, m, n);
