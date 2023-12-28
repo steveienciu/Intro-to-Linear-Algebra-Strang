@@ -1,4 +1,5 @@
 /* this will only handle matrix elimination of square matrices */
+/* need to also add logic for when need to switch rows to get matrix in right form */
 
 #include <stdio.h>
 #include <stdlib.h>
