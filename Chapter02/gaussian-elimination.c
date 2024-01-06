@@ -64,13 +64,15 @@ void mem_alloc(double ***matrix, int m)
 	}
 	for (int i = 0; i < m; ++i) {
 		(*matrix)[i] = malloc(m * sizeof(double));
+		// check if row can be allocated
 		if ((*matrix)[i] == NULL) {
 			isAllocated = false;
 			break;
 		}
 		++counter;
 	}
-
+	
+	// free memory if row not allocated 
 	if (!isAllocated) {
 		free_matrix(*matrix, counter);
 		mem_failure();
@@ -91,11 +93,31 @@ void gaussian_elimination(double **matrix, int m)
 {
 	int count = 0, i = 0, j = 0, s = 0;
 	double multiplier = 0;
-
+	
+	// count number of iterations for Gaussian elimination
 	for (int k = 0; k < m; ++k) {
 		count += k;
 	}
-
+	
+	// swap zero pivots with nonzero value below it 
+	for (int a = 0; a < m; ++a) {
+		// check if pivot is zero
+		if (matrix[a][a] == 0 && (a + 1) < m) {
+			for (int b = a + 1; b < m; ++b) {
+				if (matrix[b][a] != 0) {
+					for (int c = 0; c < m; ++c) {
+						// swap the rows
+						double temp = matrix[a][c];
+						matrix[a][c] = matrix[b][c];
+						matrix[b][c] = temp;
+					}
+					break;
+				}
+			}
+		}
+	}
+	
+	// perform Gaussian elimination
 	for (int k = 0; k < count; ++k) {
 		multiplier = -(matrix[s + 1][j] / matrix[i][i]);
 		for (int l = 0; l < m; ++l) {
