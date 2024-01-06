@@ -149,14 +149,11 @@ void jordan_elimination(double **matrix, int m, int n)
 	s = m - 1;
 	i = s;
 	j = s; // j = n - 1 if have recatangular matrix
-	printf("\ns=%d, i=%d, j=%d\n", s, i, j);
 	// Jordan elimination
 	for (int k = 0; k < count; ++k) {
 		multiplier = -(matrix[s - 1][j] / matrix[i][i]);
-		printf("\nmulitplier=%lf\n", multiplier);
 		for (int l = n; l > 0; --l) {
 			matrix[s - 1][l - 1] += multiplier * matrix[i][l - 1];
-			printf("\nmatrix=%lf\n", matrix[s-1][l-1]);
 		}
 		--s;
 		if (s == 0) {
