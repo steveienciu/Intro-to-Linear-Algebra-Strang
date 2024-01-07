@@ -44,11 +44,12 @@ int main()
 	// does matrix have an inverse
 	isInverse = is_inverse(matrix, m);
 
+	// do following depending on if matrix has an inverse
 	if (!isInverse) {
 		printf("\nThe inputted matrix does not have an inverse.\n");
 	}
 	else {
-		//perform Jordan elimination
+		// perform Jordan elimination
 		jordan_elimination(matrix, m, m);
 		
 		// print inverse matrix
@@ -162,7 +163,8 @@ void gaussian_elimination(double **matrix, int m, int n)
 bool is_inverse(double **matrix, int m)
 {
 	bool isInverse = true;
-
+	
+	// check to see if after gauss elimination the pivots are nonzero
 	for (int i = 0; i < m; ++i) {
 		if (matrix[i][i] == 0) {
 			isInverse = false;
