@@ -200,7 +200,8 @@ void jordan_elimination(double **matrix, int m, int n)
 			s = i;
 		}
 	}
-
+	
+	// divide row by the inverse of the pivot to turn user matrix into identity matrix
 	for (int k = 0; k < m; ++k) {
 		double divisor = 1 / matrix[k][k];
 		for (int l = 0; l < n * IDENTITY_MATRIX_FACTOR; ++l) {
