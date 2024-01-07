@@ -19,7 +19,7 @@ int main()
 	double **matrix;
 	int m;
 
-	printf("\nThis program will take your matrix and perform Guassian elimination on it.\n");
+	printf("\nThis program will take your matrix and perform Guass-Jordan elimination on it.\n");
 	printf("Please enter size of square matrix: ");
 	scanf("%d", &m);
 
