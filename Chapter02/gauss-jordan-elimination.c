@@ -94,73 +94,54 @@ void user_input(double **matrix, int m, int n)
 
 void gaussian_elimination(double **matrix, int m, int n)
 {
-	int count = 0, i = 0, j = 0, s = 0;
 	double multiplier = 0;
 	
-	// count number of iterations for Gaussian elimination
-	for (int k = 0; k < m; ++k) {
-		count += k;
-	}
-	
 	// swap zero pivots with nonzero value below it 
-	for (int a = 0; a < m; ++a) {
+	for (int i = 0; i < m; ++i) {
 		// check if pivot is zero
-		if (matrix[a][a] == 0 && (a + 1) < m) {
-			for (int b = a + 1; b < m; ++b) {
-				if (matrix[b][a] != 0) {
-					for (int c = 0; c < n; ++c) {
+		if (matrix[i][i] == 0 && (i + 1) < m) {
+			for (int j = i + 1; j < m; ++j) {
+				if (matrix[j][i] != 0) {
+					for (int k = 0; k< n; ++k) {
 						// swap the rows
-						double temp = matrix[a][c];
-						matrix[a][c] = matrix[b][c];
-						matrix[b][c] = temp;
+						double temp = matrix[i][k];
+						matrix[i][k] = matrix[j][k];
+						matrix[j][k] = temp;
 					}
 					break;
 				}
 			}
 		}
 	}
-	
-	// perform Gaussian elimination
-	for (int k = 0; k < count; ++k) {
-		multiplier = -(matrix[s + 1][j] / matrix[i][i]);
-		for (int l = 0; l < n; ++l) {
-			matrix[s + 1][l] += multiplier * matrix[i][l];
+
+	// perform gaussian elimination
+	int row_index = 1;
+	for (int i = 0; i < m - 1; ++i) {
+		// start of pivot
+		for (int j = row_index; j < m; ++j) {
+			multiplier = -(matrix[j][i] / matrix[i][i]);
+			// logic to manipulate row in question
+			for (int k = 0; k < n; ++k) {
+				matrix[j][k] += multiplier * matrix[i][k];
+			}
 		}
-		++s;
-		if ((s + 1) == m) {
-			++j;
-			++i;
-			s = i;
-		}
+		++row_index;
 	}
 }
 
 void jordan_elimination(double **matrix, int m, int n)
 {
-	int count = 0, i = 0, j = 0, s = 0;
 	double multiplier = 0;
-	
-	// count number of iterations for Jordan elimination
-	for (int k = 0; k < m; ++k) {
-		count += k;
-	}
+	int row_index = m - 1;
 
-	// set variables up for the Jordan elimination
-	s = m - 1;
-	i = s;
-	j = s; // j = n - 1 if have recatangular matrix
-	// Jordan elimination
-	for (int k = 0; k < count; ++k) {
-		multiplier = -(matrix[s - 1][j] / matrix[i][i]);
-		for (int l = n; l > 0; --l) {
-			matrix[s - 1][l - 1] += multiplier * matrix[i][l - 1];
+	for (int i = 0; i < m - 1; ++i) {
+		for (int j = row_index; j > 0; --j) {
+			multiplier = -(matrix[j - 1][row_index] / matrix[row_index][row_index]);
+			for (int k = 0; k < n; ++k) {
+				matrix[j - 1][k] += multiplier * matrix[row_index][k];
+			}
 		}
-		--s;
-		if (s == 0) {
-			--j;
-			--i;
-			s = i;
-		}
+		--row_index;
 	}
 }
 	
