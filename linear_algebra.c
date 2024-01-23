@@ -11,20 +11,48 @@ void mem_failure(void)
 	FAILURE;
 }
 
-void mem_alloc(double ***matrix, int m, int n)
+double **matrix_mem_alloc(int m, int n)
 {
 	int counter = 0;
 	bool isAllocated = true;
 
-	*matrix = malloc(m * sizeof(double *));
-	if (*matrix == NULL)
+	double **matrix = malloc(m * sizeof(double *));
+	if (matrix == NULL)
 	{
-		mem_failure();
+		return NULL;
 	}
-	for (int i = 0; i < n; ++i) {
-		(*matrix)[i] = malloc(n * sizeof(double));
+	for (int i = 0; i < m; ++i) {
+		(matrix)[i] = malloc(n * sizeof(double));
 		// check if row can be allocated
-		if ((*matrix)[i] == NULL) {
+		if ((matrix)[i] == NULL) {
+			isAllocated = false;
+			break;
+		}
+		++counter;
+	}
+
+	if (!isAllocated) {
+		free_matrix(matrix, counter);
+		return NULL;
+	}
+
+	return matrix;
+}
+
+double **matrix_mem_realloc(double **old_matrix, int m_new, int n_new)
+{
+	int counter = 0;
+	bool isAllocated = true;
+
+	double **new_matrix = realloc(old_matrix, m_new * sizeof(double *));
+	if (new_matrix == NULL)
+	{
+		return NULL;
+	}
+	for (int i = 0; i < m_new; ++i) {
+		(new_matrix)[i] = realloc(new_matrix[i], n_new * sizeof(double));
+		// check if row can be allocated
+		if ((new_matrix)[i] == NULL) {
 			isAllocated = false;
 			break;
 		}
@@ -33,9 +61,11 @@ void mem_alloc(double ***matrix, int m, int n)
 
 	// free memory if row not allocated
 	if (!isAllocated) {
-		free_matrix(*matrix, counter);
-		mem_failure();
+		free_matrix(new_matrix, counter);
+		return NULL;
 	}
+
+	return new_matrix;
 }
 
 void user_input_matrix(double **matrix, int m, int n)
@@ -74,25 +104,47 @@ void swap_row(double **matrix, int m, int n)
 	}
 }
 
-void gauss_elimination(double **matrix, int m, int n)
+bool is_inverse(double **matrix, int m)
+{
+	bool isInverse = true;
+
+	// check to see if after gauss elimination the pivots are nonzero
+	for (int i = 0; i < m; ++i) {
+		if (matrix[i][i] == 0) {
+			isInverse = false;
+			break;
+		}
+	}
+
+	return isInverse;
+}
+
+void switch_pivot_column(double **matrix, int row_index, int *column_index, int n2)
+{
+	for (int i = *column_index; i < n2; ++i) {
+		// move pivot over if have nonzero column in that row
+		if (matrix[row_index][i] != 0) {
+			*column_index = i;
+				break;
+		}
+	}
+}	
+
+
+void gauss_elimination(double **matrix, int m, int n1, int n2)
 {
 	double multiplier = 0;
 	int row_index = 0, column_index = 0;
 
 	// perform gaussian elimination
-	while (column_index != n) {
+	while (column_index != n2) {
 		// swap rows to get non-zero pivot
 		if (matrix[row_index][column_index] == 0) {
-			swap_row(matrix, m, n);
+			swap_row(matrix, m, n1);
 		}
 		// runs if have column full of zero; switch pivot column
 		if (matrix[row_index][column_index] == 0) {
-			for (int i = 1; i < n; ++i) {
-				if (matrix[row_index][i] != 0) {
-					column_index = i;
-					break;
-				}
-			}
+			switch_pivot_column(matrix, row_index, &column_index, n2);
 		}
 		// if reach this stage, rest of the matrix is zero
 		if (matrix[row_index][column_index] == 0) {
@@ -102,7 +154,7 @@ void gauss_elimination(double **matrix, int m, int n)
 		for (int j = row_index + 1; j < m; ++j) {
 			multiplier = -(matrix[j][column_index] / matrix[row_index][column_index]);
 			// logic to manipulate row in question
-			for (int k = 0; k < n; ++k) {
+			for (int k = 0; k < n1; ++k) {
 				matrix[j][k] += multiplier * matrix[row_index][k];
 			}
 		}
@@ -111,14 +163,14 @@ void gauss_elimination(double **matrix, int m, int n)
 	}
 }
 
-void jordan_elimination(double **matrix, int m, int n)
+void jordan_elimination(double **matrix, int m, int n1, int n2, int flag)
 {
 	double multiplier = 0;
 	int row_index = 0, column_index = 0;
 
 	// locate the first pivot
 	int count = 0;
-	for (int i = 0; i < n; ++i) {
+	for (int i = 0; i < n2; ++i) {
 		// see if dealing with zero matrix
 		if (matrix[row_index][i] == 0) {
 			++count;
@@ -132,32 +184,37 @@ void jordan_elimination(double **matrix, int m, int n)
 	}
 
 	// dealing with zero matrix if this is true
-	if (count == n) {
+	if (count == n2) {
 		return;
 	}
 
 	// perform Jordan elimination
-	while (column_index != n) {
+	while (column_index != n2) {
 		// start of pivot
-		for (int i = column_index; i < n; ++i) {
-			if (matrix[row_index][i] != 0) {
-				column_index = i;
-				break;
-			}
-		}
+		switch_pivot_column(matrix, row_index, &column_index, n2);	
 		// if reach this stage, rest of the matrix is zero
 		if (matrix[row_index][column_index] == 0) {
 			break;
 		}
 		for (int j = row_index; j > 0; --j) {
 			multiplier = -(matrix[j - 1][column_index] / matrix[row_index][column_index]);
-			for (int k = 0; k < n; ++k) {
+			for (int k = 0; k < n1; ++k) {
 				// logic to manipulate row in question
 				matrix[j - 1][k] += multiplier * matrix[row_index][k];
 			}
 		}
 		++row_index;
 		++column_index;
+	}
+	
+	// divide each element in the row by its pivot value
+	if (flag) {
+		for (int i = 0; i < m; ++i) {
+			double divisor = 1 / matrix[i][i];
+			for (int j = 0; j < n1; ++j) {
+				matrix[i][j] *= divisor;
+			}
+		}
 	}
 }
 
