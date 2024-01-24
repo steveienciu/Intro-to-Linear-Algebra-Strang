@@ -22,13 +22,18 @@ int main()
 	}
 
 	// allocate memory for user inputted matrix
-	mem_alloc(&matrix, m, m);
+	matrix = matrix_mem_alloc(m, m);
+
+	// return error message if matrix not allocated properly 
+	if (matrix == NULL) {
+		mem_failure();
+	}
 
 	// accept user input 
 	user_input_matrix(matrix, m, m);
 
 	// perform Gaussian elimination
-	gauss_elimination(matrix, m, m);
+	gauss_elimination(matrix, m, m, m);
 
 	// output Gauss elimination matrix
 	print_matrix(matrix, m, m);

@@ -1,17 +1,15 @@
-/* find the transpose of the matrix */
+/* find if the matrix is symmetric */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-
-#define FAILURE exit(1)
-
-void mem_failure(void);
+#include "linear_algebra.h"
 
 int main()
 {
-	int **matrix, m;
-	bool sym = true;
+	double **matrix;
+	int m;
+	bool isSymmetric = true;
 
 	printf("\nThis program will determine whether sqaure matrix entered is symmetric.\n");
 	printf("Please enter the size of the square matrix: ");
@@ -22,44 +20,23 @@ int main()
 		fprintf(stderr, "Invalid size of matrix.\n");
 		FAILURE;
 	}
+	
+	// allocate memory for the matrix
+	matrix = matrix_mem_alloc(m, m);
 
-	// allocate memory for matrix
-	matrix = malloc(m * sizeof(int *));
+	// return error message if matrix not allocated properly
 	if (matrix == NULL) {
 		mem_failure();
 	}
-	else {
-		for (int i = 0; i < m; ++i) {
-			matrix[i] = malloc(m * sizeof(int));
-			if (matrix[i] == NULL) {
-				mem_failure();
-			}
-		}
-	}
 
-	// obtain matrix elemenets from user
-	printf("Please enter elements of matrix:\n");
-	for (int i = 0; i < m; ++i) {
-		for (int j = 0; j < m; ++j) {
-			scanf("%d", &matrix[i][j]);
-		}
-	}
+	// get user-input for matrix elements
+	user_input_matrix(matrix, m, m);
 
 	// decide whether matrix is symmetric
-	for (int i = 0; i < m; ++i) {
-		for (int j = 0; j < m; ++j) {
-			if (matrix[i][j] != matrix[j][i]) {
-				sym = false;
-				break;
-			}
-		}
-		if (!sym) {
-			break;
-		}
-	}
+	isSymmetric = is_symmetric(matrix, m, m);
 	
 	// print result
-	if (!sym) {
+	if (!isSymmetric) {
 		printf("\nMatrix is not symmetric.\n");
 	} 
 	else {
@@ -67,16 +44,7 @@ int main()
 	}
 
 	// free memory allocated to matrix
-	for (int i = 0; i < m; ++i) {
-		free(matrix[i]);
-	}
-	free(matrix);
+	free_matrix(matrix, m);
 
 	return 0;
-}
-
-void mem_failure(void)
-{
-	fprintf(stderr, "\nMatrix was not properly allocated.\n");
-	FAILURE;
 }
