@@ -60,6 +60,26 @@ void swap_row(double **matrix, int m, int n);
  */
 bool is_inverse(double **matrix, int m);
 
+/* Function: is_symmetric
+ * Description: checks to see if the matrix is symmetric
+ * Parameters:
+ *	- matrix: matrix being dealt with 
+ *	- m: number of rows of given matrix
+ *	- n: number of columns of given matrix
+ * Return: if given matrix is symmetric
+ */
+bool is_symmetric(double **matrix, int m, int n);
+
+/* Function: transpose_matrix
+ * Description: take transpose of matrix
+ * Parameters: 
+ * 	- original_matrix: matrix inputted by user
+ *	- transpose_matrix: where resulting transpose matrix will be stored
+ *	- m: number of rows of original matrix
+ *	- n: number of columns of original matrix
+ */
+void transpose_matrix(double **original_matrix, double **transpose_matrix, int m, int n);
+
 /*
  * Function: switch_pivot_column
  * Description: switches column pivot to nonzero value
@@ -78,7 +98,7 @@ void switch_pivot_column(double **matrix, int row_index, int *column_index, int 
  *	- matrix: matrix being dealt with 
  *	- m: number of rows of given matrix
  *	- n1: number of column of given matrix
- *	- n2: subset of n1, will typically be the same value as n2
+ *	- n2: subset of n1, will typically be the same value as n1; used for number of columns should sift through when doing the elimination 
  */
 void gauss_elimination(double **matrix, int m, int n1, int n2);
 
@@ -88,7 +108,7 @@ void gauss_elimination(double **matrix, int m, int n1, int n2);
  *	- matrix: matrix being dealt with 
  *	- m: number of rows of given matrix
  *	- n1: number of columns of given matrix
- *	- n2: subset of n1, will rtpically be the same value as n2
+ *	- n2: subset of n1, will typically be the same value as n1; used for number of columns should sift through when doing the elimination
  * 	- flag: set to 1 if want to divide the row by its pivot or 0 if want to leave as is
  */
 void jordan_elimination(double **matrix, int m, int n1, int n2, int flag);

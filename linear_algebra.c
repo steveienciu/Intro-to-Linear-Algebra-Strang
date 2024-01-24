@@ -118,6 +118,33 @@ bool is_inverse(double **matrix, int m)
 
 	return isInverse;
 }
+ 
+bool is_symmetric(double **matrix, int m, int n) 
+{
+	bool isSymmetric = true;
+	
+	// check for symmetry
+	for (int i = 0; i < m; ++i) {
+		for (int j = 0; j < n; ++j) {
+			if (matrix[i][j] != matrix[j][i]) {
+				isSymmetric = false;
+				return isSymmetric;
+			}
+		}
+	}
+
+	return isSymmetric;
+}
+
+void transpose_matrix(double **original_matrix, double **transpose_matrix, int m, int n)
+{
+	// take transpose of matrix
+	for (int i = 0; i < m; ++i) {
+		for (int j = 0; j < n; ++j) {
+			transpose_matrix[j][i] = original_matrix[i][j];
+		}
+	}
+}
 
 void switch_pivot_column(double **matrix, int row_index, int *column_index, int n2)
 {
@@ -129,7 +156,6 @@ void switch_pivot_column(double **matrix, int row_index, int *column_index, int 
 		}
 	}
 }	
-
 
 void gauss_elimination(double **matrix, int m, int n1, int n2)
 {
