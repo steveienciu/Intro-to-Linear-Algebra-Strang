@@ -38,7 +38,7 @@ int main()
 	double **new_matrix = matrix_mem_realloc(matrix, m, m * 2);
 
 	if (new_matrix != NULL) {
-		// incase reallocation was not done in place; will make easier to free
+		// incase reallocation was not done in place part of memory; will make easier to free
 		matrix = new_matrix;
 	}
 	else {
