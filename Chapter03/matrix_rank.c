@@ -5,18 +5,6 @@
 #include <stdbool.h>
 #include "linear_algebra.h"
 
-/*
-int get_row(void)
-{
-	char row;
-
-	// flush input buffer
-	while ((row = getchar()) != '\n');
-
-	printf("Please enter the number of rows: ");
-	while (isdigit(row = get()))	
-*/
-
 int main() 
 {
 	double **matrix;
