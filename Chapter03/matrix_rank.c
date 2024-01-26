@@ -18,13 +18,13 @@ int main()
 	scanf("%d", &m);
 	
 	// ensure that input buffer is cleared
-	while ((ch = getchar()) != '\n');
+	clear_buffer();
 	
 	printf("Please enter the number of columns: ");
 	scanf("%d", &n);
 
 	// ensure that input buffer is cleared
-	while ((ch = getchar()) != '\n');
+	clear_buffer();
 
 	// make sure not dealing with 1 x 1 matrix or less matrix
 	if (m < 2 && n < 2) {
