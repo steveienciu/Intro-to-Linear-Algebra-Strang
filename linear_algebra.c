@@ -11,6 +11,13 @@ void mem_failure(void)
 	FAILURE;
 }
 
+void clear_buffer(void)
+{
+	char ch;
+
+	while ((ch = getchar()) != '\n');
+}
+
 double **matrix_mem_alloc(int m, int n)
 {
 	int counter = 0;
@@ -70,11 +77,6 @@ double **matrix_mem_realloc(double **old_matrix, int m_new, int n_new)
 
 void user_input_matrix(double **matrix, int m, int n)
 {
-	char ch;
-
-	// flush input buffer
-	while ((ch = getchar()) != '\n');
-
 	printf("Pleae enter elements of %d x %d matrix:\n", m, n);
 	for (int i = 0; i < m; ++i) {
 		for (int j = 0; j < n; ++j) {

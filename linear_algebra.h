@@ -15,6 +15,12 @@
  */
 void mem_failure(void);
 
+/* Function: clear_buffer
+ * Description: clears the input buffer to ensure unwanted characters not kept 
+ * Parameters: null
+ */
+void clear_buffer(void);
+
 /* Function: matrix_mem_alloc
  * Description: allocates memory for a matrix
  * Parameters:
