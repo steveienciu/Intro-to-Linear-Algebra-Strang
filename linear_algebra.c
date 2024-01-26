@@ -159,6 +159,16 @@ void switch_pivot_column(double **matrix, int row_index, int *column_index, int 
 	}
 }	
 
+void matrix_addition(double **matrix_sum, double **matrix1, double **matrix2, int m, int n)
+{
+	for (int i = 0; i < m; ++i) {
+		for (int j = 0; j < n; ++j) {
+			// add the two matrices together
+			matrix_sum[i][j] = matrix1[i][j] + matrix2[i][j];
+		}
+	}
+}
+
 void gauss_elimination(double **matrix, int m, int n1, int n2)
 {
 	double multiplier = 0;

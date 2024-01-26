@@ -97,6 +97,18 @@ void transpose_matrix(double **original_matrix, double **transpose_matrix, int m
  */
 void switch_pivot_column(double **matrix, int row_index, int *column_index, int n2);
 
+/* 
+ * Function: matrix_addition
+ * Description: performs addition on two matrices
+ * Parameters:
+ *	- matrix_sum: matrix that will hold the addition results
+ *	- matrix1: matrix that is being added
+ * 	- matrix2: matrix that is being added
+ *	- m: number of row of sum matrix
+ *	- n: number of columns of sum matrix
+ */
+void matrix_addition(double **matrix_sum, double **matrix1, double **matrix2, int m, int n);
+
 /*
  * Function: gauss_elimination
  * Description: performs Gauss elimination on given matrix
