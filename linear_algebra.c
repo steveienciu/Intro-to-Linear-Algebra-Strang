@@ -75,7 +75,7 @@ void user_input_matrix(double **matrix, int m, int n)
 	// flush input buffer
 	while ((ch = getchar()) != '\n');
 
-	printf("Pleae enter elements of %d x %d matrix:\n", m, m);
+	printf("Pleae enter elements of %d x %d matrix:\n", m, n);
 	for (int i = 0; i < m; ++i) {
 		for (int j = 0; j < n; ++j) {
 			scanf("%lf", &matrix[i][j]);
@@ -186,6 +186,10 @@ void gauss_elimination(double **matrix, int m, int n1, int n2)
 		}
 		++row_index;
 		++column_index;
+		// ensure that row_index does not equal m; can happen when n > m
+		if (row_index == m) {
+			break;
+		}
 	}
 }
 
@@ -231,6 +235,10 @@ void jordan_elimination(double **matrix, int m, int n1, int n2, int flag)
 		}
 		++row_index;
 		++column_index;
+		// ensure that row_index does not equal m; can happen when n > m
+		if (row_index == m) {
+			break;
+		}
 	}
 	
 	// divide each element in the row by its pivot value
