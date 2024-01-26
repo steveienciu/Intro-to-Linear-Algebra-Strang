@@ -9,7 +9,6 @@ int main()
 {
 	double **matrix;
 	int m, n, row_index = 0, column_index = 0;
-	char ch;
 
 	// output on screen to give user instructions
 	printf("This program will find the rank of an inputted matrix.\n");
