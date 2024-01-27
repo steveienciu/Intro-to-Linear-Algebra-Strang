@@ -169,6 +169,18 @@ void matrix_addition(double **matrix_sum, double **matrix1, double **matrix2, in
 	}
 }
 
+void matrix_multiplication(double **matrix_product, double **matrix1, double **matrix2, int m, int n, int mn)
+{
+	for (int i = 0; i < m; ++i) {
+		for (int j = 0; j < n; ++j) {
+			for (int k = 0; k < mn; ++k) {
+				// add the products of the right and left matrix to the output matrix
+				matrix_product[i][j] += matrix1[i][k] * matrix2[k][j];
+			}
+		}
+	}
+}
+
 void gauss_elimination(double **matrix, int m, int n1, int n2)
 {
 	double multiplier = 0;

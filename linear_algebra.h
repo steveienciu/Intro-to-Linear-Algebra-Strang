@@ -109,6 +109,18 @@ void switch_pivot_column(double **matrix, int row_index, int *column_index, int 
  */
 void matrix_addition(double **matrix_sum, double **matrix1, double **matrix2, int m, int n);
 
+/* Function: matrix_multiplication
+ * Description: takes the product of two matrices
+ * Parameters:
+ *	- matrix_product: matrix that will hold the product result
+ *	- matrix1: is the left matrix being multiplied
+ *	- matrix2: is the right matrix being multiplied 
+ *	- m: number of rows of product matrix
+ *	- n: number of columns of product matrix
+ *	- mn: number of columns of right matrix or number of rows of left matrix; same value
+ */ 
+void matrix_multiplication(double **matrix_product, double **matrix1, double **matrix2, int m, int n, int mn);
+
 /*
  * Function: gauss_elimination
  * Description: performs Gauss elimination on given matrix
