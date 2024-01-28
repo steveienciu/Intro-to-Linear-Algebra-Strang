@@ -33,7 +33,7 @@ int main()
 	user_input_output(matrix, m);
 
 	// perform Gaussian elimination
-	gauss_elimination(matrix, m, m + 1, m);
+	gauss_elimination(matrix, m, m + 1, m, 1);
 
 	// check is matrix has inverse
 	isInverse = is_inverse(matrix, m);
@@ -45,6 +45,9 @@ int main()
 	else {
 		// perform Jordan elimination
 		jordan_elimination(matrix, m, m + 1, m, 1);
+
+		// divide row by the pivot columns element
+		divide_by_pivot(matrix, m, m + 1);
 
 		// print the answer for the x vector
 		print_answer(matrix, m);

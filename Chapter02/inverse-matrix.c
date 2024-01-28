@@ -59,7 +59,7 @@ int main()
 	}
 
 	// perform Gaussian elimination
-	gauss_elimination(new_matrix, m, m * 2, m);
+	gauss_elimination(new_matrix, m, m * 2, m, 1);
 
 	// does matrix have an inverse
 	isInverse = is_inverse(new_matrix, m);
@@ -71,6 +71,9 @@ int main()
 	else {
 		// perform Jordan elimination
 		jordan_elimination(new_matrix, m, m * 2, m, 1);
+
+		// divide all rows by the pivot
+		divide_by_pivot(matrix, m, m * 2);
 		
 		// print inverse matrix
 		print_matrix(new_matrix, m, m * 2);
