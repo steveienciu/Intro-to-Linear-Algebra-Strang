@@ -33,10 +33,10 @@ int main()
 	user_input_matrix(matrix, m, m);
 
 	// perform Gaussian elimination
-	gauss_elimination(matrix, m, m, m);
+	gauss_elimination(matrix, m, m, m, 1);
 
 	// perform Jordan elimination
-	jordan_elimination(matrix, m, m, m, 0);
+	jordan_elimination(matrix, m, m, m, 1);
 
 	// output Gauss-Jordan elimination matrix
 	print_matrix(matrix, m, m);

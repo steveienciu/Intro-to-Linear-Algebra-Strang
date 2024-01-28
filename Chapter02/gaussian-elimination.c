@@ -33,7 +33,7 @@ int main()
 	user_input_matrix(matrix, m, m);
 
 	// perform Gaussian elimination
-	gauss_elimination(matrix, m, m, m);
+	gauss_elimination(matrix, m, m, m, 1);
 
 	// output Gauss elimination matrix
 	print_matrix(matrix, m, m);
