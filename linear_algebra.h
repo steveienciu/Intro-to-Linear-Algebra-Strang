@@ -129,8 +129,9 @@ void matrix_multiplication(double **matrix_product, double **matrix1, double **m
  *	- m: number of rows of given matrix
  *	- n1: number of column of given matrix
  *	- n2: subset of n1, will typically be the same value as n1; used for number of columns should sift through when doing the elimination 
+ *	- flag: if true, perform gauss elimination on every column; if false, perform gauss on subset of column
  */
-void gauss_elimination(double **matrix, int m, int n1, int n2);
+void gauss_elimination(double **matrix, int m, int n1, int n2, int flag);
 
 /* Function: jordan_elimination
  * Description: performs Jordan elimination on given matrix
@@ -139,9 +140,18 @@ void gauss_elimination(double **matrix, int m, int n1, int n2);
  *	- m: number of rows of given matrix
  *	- n1: number of columns of given matrix
  *	- n2: subset of n1, will typically be the same value as n1; used for number of columns should sift through when doing the elimination
- * 	- flag: set to 1 if want to divide the row by its pivot or 0 if want to leave as is
+ *	- flag: if true, perform jordan elimination on every column; if false, perform jordan on subset of column
  */
 void jordan_elimination(double **matrix, int m, int n1, int n2, int flag);
+
+/* Function: divide_by_pivot
+ * Description: divide row by pivot value 
+ * Parameters: 
+ *	- matrix: matrix being dealt with 
+ *	- m: number of row of given matrix
+ *	- n: number of columns of given matrix
+ */
+void divide_by_pivot(double **matrix, int m, int n);
 
 /* Function: free_matrix
  * Description: deallocates memory of matrix

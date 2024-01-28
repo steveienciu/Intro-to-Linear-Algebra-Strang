@@ -181,7 +181,7 @@ void matrix_multiplication(double **matrix_product, double **matrix1, double **m
 	}
 }
 
-void gauss_elimination(double **matrix, int m, int n1, int n2)
+void gauss_elimination(double **matrix, int m, int n1, int n2, int flag)
 {
 	double multiplier = 0;
 	int row_index = 0, column_index = 0;
@@ -204,8 +204,17 @@ void gauss_elimination(double **matrix, int m, int n1, int n2)
 		for (int j = row_index + 1; j < m; ++j) {
 			multiplier = -(matrix[j][column_index] / matrix[row_index][column_index]);
 			// logic to manipulate row in question
-			for (int k = 0; k < n1; ++k) {
-				matrix[j][k] += multiplier * matrix[row_index][k];
+			// when flag true, manipulate entire row
+			if (flag) {
+				for (int k = 0; k < n1; ++k) {
+					matrix[j][k] += multiplier * matrix[row_index][k];
+				}
+			}
+			// when flag flase, manipulate subset of row
+			else {
+				for (int k = 0; k < n2; ++k) {
+					matrix[j][k] += multiplier * matrix[row_index][k];
+				}
 			}
 		}
 		++row_index;
@@ -252,9 +261,17 @@ void jordan_elimination(double **matrix, int m, int n1, int n2, int flag)
 		}
 		for (int j = row_index; j > 0; --j) {
 			multiplier = -(matrix[j - 1][column_index] / matrix[row_index][column_index]);
-			for (int k = 0; k < n1; ++k) {
-				// logic to manipulate row in question
-				matrix[j - 1][k] += multiplier * matrix[row_index][k];
+			if (flag) {
+				for (int k = 0; k < n1; ++k) {
+					// logic to manipulate row in question
+					matrix[j - 1][k] += multiplier * matrix[row_index][k];
+				}
+			}
+			else {
+				for (int k = 0; k < n2; ++k) {
+					// logic to manipulate row in question
+					matrix[j - 1][k] += multiplier * matrix[row_index][k];
+				}
 			}
 		}
 		++row_index;
@@ -264,15 +281,26 @@ void jordan_elimination(double **matrix, int m, int n1, int n2, int flag)
 			break;
 		}
 	}
+}
+
+void divide_by_pivot(double **matrix, int m, int n) 
+{
+	int column_index = 0, row_index = 0;
 	
-	// divide each element in the row by its pivot value
-	if (flag) {
-		for (int i = 0; i < m; ++i) {
-			double divisor = 1 / matrix[i][i];
-			for (int j = 0; j < n1; ++j) {
-				matrix[i][j] *= divisor;
-			}
+	switch_pivot_column(matrix, row_index, &column_index, n);
+	// dealing with zero matrix
+	if (column_index == 0 && matrix[row_index][column_index] == 0) {
+		return;
+	}
+
+	// logic to divide row by pivot element
+	while (row_index != m && column_index != n - 1) {
+		switch_pivot_column(matrix, row_index, &column_index, n);
+		double divisor = 1 / matrix[row_index][column_index];
+		for (int i = 0; i < n; ++i) {
+			matrix[row_index][i] *= divisor;
 		}
+		++row_index;
 	}
 }
 
