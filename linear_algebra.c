@@ -306,6 +306,12 @@ void divide_by_pivot(double **matrix, int m, int n)
 
 void free_matrix(double **matrix, int m)
 {
+	// check to see if matrix has already been freed
+	if (matrix == NULL) {
+		return;
+	}
+
+	// deallocate memory of matrix
 	for (int i = 0; i < m; ++i) {
 		free(matrix[i]);
 	}
