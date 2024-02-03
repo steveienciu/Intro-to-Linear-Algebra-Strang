@@ -1,4 +1,4 @@
-/* program which finds all the solutions of */
+/* program which finds all the solutions of Ax = b */
 
 #include <stdio.h> 
 #include <stdlib.h>
@@ -97,6 +97,7 @@ int main()
 			free_matrix(matrix, m); free(column_pivot_index);
 			mem_failure();
 		}
+		// incase address changes
 		else {
 			column_pivot_index = temp;
 		}
@@ -104,20 +105,21 @@ int main()
 		// allocate space for number of free variables
 		int free_count = n - pivot_count;
 
-		// have and column rank; only one solution
+		// have column rank; only one solution
 		if (free_count == 0) {
 			print_single_solution(matrix, n); 
 			free(column_pivot_index);
 		}
 		// have infinite number of solutions
 		else {
-			// allovate sapce for free variable indexes array
+			// allocate sapce for free variable indexes array
 			int *free_index = malloc(free_count * sizeof(int));
 			// ensure that space is allocated properly 
 			if (free_index == NULL) {
 				free_matrix(matrix, m); free(column_pivot_index);
 				mem_failure();
 			}
+			// find the free variables
 			find_free_variable(column_pivot_index, free_index, pivot_count, free_count, n);
 			
 			// allocate memory for struct
@@ -127,8 +129,10 @@ int main()
 				free_matrix(matrix, m); free(column_pivot_index); free(free_index);
 				FAILURE;
 			}
-
+			
+			// print all the solutions for x
 			print_complete_solution(matrix, data, m, n, free_count, pivot_count, free_index, column_pivot_index); 
+
 			// free memory for the arrays
 			free(free_index); free(column_pivot_index); free_nullspace(data, free_count);
 		}
