@@ -22,7 +22,7 @@ int main()
 
 	// ensure have valid dimension
 	if (m < 2) {
-		fprintf(stderr, "\nImproper vector dimension on line 22 in main.\n");
+		fprintf(stderr, "\nImproper vector dimension on line 25 in main.\n");
 		FAILURE;
 	}
 
