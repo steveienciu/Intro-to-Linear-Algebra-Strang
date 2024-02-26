@@ -30,13 +30,13 @@ int main()
 	clear_buffer();
 
 	// allocate space for the vector to be projected on
-	vectora = malloc(m * sizeof(int));
+	vectora = malloc(m * sizeof(double));
 	if (vectora == NULL) {
 		mem_failure();
 	}
 
 	// allocate space for the vector to be projected
-	vectorb = malloc(m * sizeof(int));
+	vectorb = malloc(m * sizeof(double));
 	if (vectorb == NULL) {
 		free(vectora);
 		mem_failure();
@@ -54,6 +54,8 @@ int main()
 	user_input_vector(vectorb, m);
 
 	find_projected_vector(vectora, vectorb, m, &num, &denum, &x);
+
+	free(vectora); free(vectorb);
 
 	return 0;
 }
