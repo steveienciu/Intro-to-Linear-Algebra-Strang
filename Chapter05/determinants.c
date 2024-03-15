@@ -5,8 +5,6 @@
 #include <stdbool.h>
 #include "linear_algebra.h"
 
-double find_determinant(double **matrix, int m);
-
 int main()
 {
 	double **matrix, determinant;
@@ -52,21 +50,4 @@ int main()
 	free_matrix(matrix, m);
 
 	return 0;
-}
-
-double find_determinant(double **matrix, int m)
-{
-	double determinant;
-	
-	// find the determinant of the matrix
-	for (int i = 0; i < m; ++i) {
-		if (i == 0) {
-			determinant = matrix[i][i];
-		}
-		else {
-			determinant *= matrix[i][i];
-		}
-	}
-
-	return determinant;
 }
