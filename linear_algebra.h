@@ -153,6 +153,16 @@ void jordan_elimination(double **matrix, int m, int n1, int n2, int flag);
  */
 void divide_by_pivot(double **matrix, int m, int n);
 
+/*
+ * Function: find_determinant
+ * Description: find the determinant of a square matrix
+ * Parameters: 
+ 	- matrix: matrix being dealt with 
+	- m: number of rows (or columns)
+ * Returns: determinant of the matrix
+ */
+double find_determinant(double **maitrx, int m);
+
 /* Function: free_matrix
  * Description: deallocates memory of matrix
  * Parameters:

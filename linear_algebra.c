@@ -304,6 +304,23 @@ void divide_by_pivot(double **matrix, int m, int n)
 	}
 }
 
+double find_determinant(double **matrix, int m)
+{
+	double determinant;
+
+	// find the detetminant of the matrix
+	for (int i = 0; i < m; ++i) {
+		if (i == 0) {
+			determinant = matrix[i][i];
+		}
+		else {
+			determinant *= matrix[i][i];
+		}
+	}
+
+	return determinant;
+}
+
 void free_matrix(double **matrix, int m)
 {
 	// check to see if matrix has already been freed
